@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>An in</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --cream: #fdf6ee;
+      --blush: #f2b8b8;
+      --rose: #d4587a;
+      --deep: #2e1a1a;
+      --gold: #c9973a;
+      --soft: #f7e8e8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 2rem 1rem;
+      position: relative;
+    }
+
+    .petal {
+      position: fixed;
+      font-size: 1.2rem;
+      animation: fall linear infinite;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-60px) rotate(0deg); opacity: 0.7; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    .card {
+      position: relative;
+      z-index: 10;
+      background: white;
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(212, 88, 122, 0.15), 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid rgba(242, 184, 184, 0.3);
+      animation: cardIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      margin: auto;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(40px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--deep);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+    h1 span { color: var(--rose); font-style: italic; }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: #999;
+      margin-bottom: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+    }
+
+    .message {
+      background: var(--soft);
+      border-left: 3px solid var(--blush);
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .date-details {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .detail-chip {
+      background: var(--cream);
+      border: 1px solid var(--blush);
+      border-radius: 50px;
+      padding: 0.4rem 1rem;
+      font-size: 0.82rem;
+      color: var(--rose);
+      font-weight: 500;
+    }
+
+    .question {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--deep);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 50px;
+      padding: 0.85rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-yes1 {
+      background: linear-gradient(135deg, var(--rose), #e8758f);
+      color: white;
+      box-shadow: 0 6px 20px rgba(212, 88, 122, 0.35);
+    }
+    .btn-yes1:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 28px rgba(212, 88, 122, 0.45);
+    }
+
+    .btn-yes2 {
+      background: white;
+      color: var(--rose);
+      border: 2px solid var(--blush);
+      box-shadow: 0 4px 14px rgba(242, 184, 184, 0.3);
+    }
+    .btn-yes2:hover {
+      transform: translateY(-3px) scale(1.05);
+      background: var(--soft);
+      border-color: var(--rose);
+    }
+
+    .result {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .result.show { display: flex; }
+    .result-emoji { font-size: 4rem; animation: pop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes pop {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+    .result-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--rose);
+    }
+    .result-sub {
+      font-size: 0.95rem;
+      color: #777;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+    .confetti-burst {
+      font-size: 2rem;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+    const emojis = ['🌸','🌷','💐','🌺','✨','💗'];
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('div');
+      el.className = 'petal';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (4 + Math.random() * 6) + 's';
+      el.style.animationDelay = (Math.random() * 6) + 's';
+      el.style.fontSize = (0.8 + Math.random() * 1) + 'rem';
+      document.body.appendChild(el);
+    }
+  </script>
+
+  <div class="card">
+
+    <div class="main-content" id="mainContent">
+      <h1>Hey, <span>you.</span></h1>
+      <p class="subtitle">I have a very important question for you.</p>
+
+      <div class="message">
+        I really want you to say yess bcs how can u reject someone as good and cute as me hahaha. It's just a date, no hard feelings, okay?😄<br><br>
+        Nevertheless, I respect your decision. I do care more about you than I care about my heart and feelings. After all, I don't wanna put you in a tough spot.<br><br>
+        We could stroll around <strong>Blok M</strong>, get ice cream & flowers, then try that spot that's been trending lately. It'll be fun, I swear.
+      </div>
+
+      <div class="date-details">
+        <span class="detail-chip">📍 Blok M</span>
+        <span class="detail-chip">🍦 Ice cream</span>
+        <span class="detail-chip">💐 Flowers</span>
+        <span class="detail-chip">📸 Cute pics</span>
+      </div>
+
+      <p class="question">"So... will you go on a fun date with me?"</p>
+
+      <div class="buttons">
+        <button class="btn btn-yes1" onclick="answer('Yes! 😄')">Yes! 😄</button>
+        <button class="btn btn-yes2" id="yesBtn2" onclick="answer('Also yes 🌸')">Also yes</button>
+      </div>
+    </div>
+
+    <div class="result" id="resultScreen">
+      <div class="result-emoji" id="resultEmoji">🎉</div>
+      <div class="result-title" id="resultTitle">Yay!!</div>
+      <div class="result-sub" id="resultSub"></div>
+      <span class="confetti-burst">🎊</span>
+    </div>
+
+  </div>
+
+  <script>
+    // ⚠️ GANTI dengan endpoint Formspree kamu — contoh: 'https://formspree.io/f/xyzabcde'
+    const FORMSPREE_URL = 'https://formspree.io/f/XXXXXXXX';
+
+    async function answer(responseText) {
+      const main = document.getElementById('mainContent');
+      const result = document.getElementById('resultScreen');
+      const emoji = document.getElementById('resultEmoji');
+      const title = document.getElementById('resultTitle');
+      const sub = document.getElementById('resultSub');
+
+      // Kirim notifikasi ke email via Formspree
+      try {
+        await fetch(FORMSPREE_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            jawaban: responseText,
+            waktu: new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }),
+            pesan: 'Ada yang menjawab date invitation kamu! 🌸'
+          })
+        });
+      } catch (e) {
+        console.log('Gagal kirim email:', e);
+      }
+
+      // Tampilkan result
+      if (responseText.includes('Also')) {
+        emoji.textContent = '😄';
+        title.textContent = 'Also a YES!';
+        sub.textContent = "See? Both options lead to a date. It was always going to be yes. Let's go! 🌸";
+      } else {
+        emoji.textContent = '😄';
+        title.textContent = 'You said YES!';
+        sub.textContent = "I knew it. You couldn't resist. See you at Blok M — ice cream is on me! 💗";
+      }
+
+      main.style.animation = 'cardIn 0.3s reverse both';
+      setTimeout(() => {
+        main.style.display = 'none';
+        result.classList.add('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 280);
+    }
+
+    // "Also yes" button kabur saat di-hover 😈
+    const btn2 = document.getElementById('yesBtn2');
+    btn2.addEventListener('mouseover', () => {
+      const card = document.querySelector('.card');
+      const cardRect = card.getBoundingClientRect();
+      const btnRect = btn2.getBoundingClientRect();
+      const maxX = cardRect.width - btnRect.width - 20;
+      const randomX = Math.floor(Math.random() * maxX);
+      btn2.style.position = 'relative';
+      btn2.style.left = (randomX - (btnRect.left - cardRect.left)) + 'px';
+    });
+  </script>
+
+</body>
+</html>
